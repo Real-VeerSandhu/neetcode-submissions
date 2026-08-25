@@ -1,0 +1,53 @@
+class Tree:
+    def __init__(self, start, end):
+        self.left = None
+        self.right = None
+        self.start = start
+        self.end = end
+    
+    def insert(self, start, end):
+        cur = self
+
+        while True:
+            if start >= cur.end:
+                if not cur.right:
+                    cur.right = Tree(start, end)
+                    break
+                cur = cur.right
+            elif end <= cur.start:
+                if not cur.left:
+                    cur.left = Tree(start, end)
+                    break
+                cur = cur.left
+            else:
+                return False
+
+        return True
+
+
+# class MyCalendar:
+    
+#     def __init__(self):
+#         self.root = None
+
+#     def book(self, start: int, end: int) -> bool:
+#         if not self.root:
+#             self.root = Tree(start, end)
+#             return True
+#         return self.root.insert(start, end)
+class MyCalendar:
+    
+    def __init__(self):
+        self.events = []
+
+    def book(self, start: int, end: int) -> bool:
+        for prev_start, prev_end in self.events:
+            if start < prev_end and prev_start < end:
+                return False
+        
+        self.events.append((start, end))
+        return True
+
+# Your MyCalendar object will be instantiated and called as such:
+# obj = MyCalendar()
+# param_1 = obj.book(startTime,endTime)
